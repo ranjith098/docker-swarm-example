@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     # replace username/repo:tag with your name and image details
-    image: gopishankar1/myswarmapp:1.0.0
+    image: ranjithkumar123/scm:1.0.0
 #if you see deploy its for multiserver
     deploy:
 #replcias tell how many copies needed 
