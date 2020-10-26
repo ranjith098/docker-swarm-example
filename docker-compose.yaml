@@ -1,0 +1,81 @@
+version: "3"
+#two services web and database
+services:
+  web:
+    # replace username/repo:tag with your name and image details
+    image: gopishankar1/myswarmapp:1.0.0
+#if you see deploy its for multiserver
+    deploy:
+#replcias tell how many copies needed 
+      replicas: 3
+#due to some reson cotainer failed
+      restart_policy:
+        condition: on-failure
+#we provide ram and cpu
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+#need port to communicate
+    ports:
+      - "80:80"
+#special network created all this container communicate.
+#name can be anything
+    networks:
+      - webnet
+#next we create data base
+  redis:
+    image: redis
+#what ports you want to expose ?
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/ubuntu/data:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: redis-server --appendonly yes
+    networks:
+      - webnet
+networks:
+  webnet:version: "3"
+#two services web and database
+services:
+  web:
+    # replace username/repo:tag with your name and image details
+    image: gopishankar1/myswarmapp:1.0.0
+#if you see deploy its for multiserver
+    deploy:
+#replcias tell how many copies needed 
+      replicas: 3
+#due to some reson cotainer failed
+      restart_policy:
+        condition: on-failure
+#we provide ram and cpu
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 50M
+#need port to communicate
+    ports:
+      - "80:80"
+#special network created all this container communicate.
+#name can be anything
+    networks:
+      - webnet
+#next we create data base
+  redis:
+    image: redis
+#what ports you want to expose ?
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/ubuntu/data:/data
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    command: redis-server --appendonly yes
+    networks:
+      - webnet
+networks:
+  webnet:
